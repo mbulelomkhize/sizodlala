@@ -46,7 +46,7 @@ function generateArray() {
     updateStats();
 }
 
-/* ================= RENDER ================= */
+/* ================= RENDER (3D UPGRADE) ================= */
 
 function render() {
 
@@ -61,8 +61,9 @@ function render() {
         bar.style.height = (array[n] * 3) + "px";
         bar.textContent = array[n];
 
-        // 🧠 VISUAL EDUCATION STATES
+        /* ================= VISUAL STATES ================= */
 
+        // BUBBLE SORT
         if (mode === "bubble") {
 
             if (n === i || n === i + 1)
@@ -70,27 +71,30 @@ function render() {
 
             if (n >= array.length - pass)
                 bar.classList.add("sorted");
+
         }
 
+        // SELECTION SORT
         if (mode === "selection") {
-
-            if (n >= pass)
-                bar.classList.add("sorted");
-
-            if (n === i)
-                bar.classList.add("active");
 
             if (n === j)
                 bar.classList.add("minimum");
-        }
-
-        if (mode === "insertion") {
-
-            if (n <= i)
-                bar.classList.add("sorted");
 
             if (n === i)
                 bar.classList.add("active");
+
+            if (n < pass)
+                bar.classList.add("sorted");
+        }
+
+        // INSERTION SORT
+        if (mode === "insertion") {
+
+            if (n === i)
+                bar.classList.add("active");
+
+            if (n < i)
+                bar.classList.add("sorted");
         }
 
         c.appendChild(bar);
@@ -104,10 +108,28 @@ function updateStats() {
     document.getElementById("stats").innerText =
         "Comparisons: " + comparisons +
         " | Swaps: " + swaps;
-
 }
 
-/* ================= BUBBLE SORT ================= */
+/* ================= SWAP (3D ANIMATION) ================= */
+
+function swap(a, b) {
+
+    let temp = array[a];
+    array[a] = array[b];
+    array[b] = temp;
+
+    const bars = document.getElementsByClassName("bar");
+
+    if (bars[a]) bars[a].classList.add("swap");
+    if (bars[b]) bars[b].classList.add("swap");
+
+    setTimeout(() => {
+        if (bars[a]) bars[a].classList.remove("swap");
+        if (bars[b]) bars[b].classList.remove("swap");
+    }, 250);
+}
+
+/* ================= BUBBLE ================= */
 
 function moveLeft() {
     if (i > 0) i--;
@@ -124,10 +146,8 @@ function compare(choice) {
     comparisons++;
 
     if (choice === shouldSwap && shouldSwap) {
-
         swap(i, i + 1);
         swaps++;
-
     }
 
     i++;
@@ -141,7 +161,7 @@ function compare(choice) {
     updateStats();
 }
 
-/* ================= SELECTION SORT ================= */
+/* ================= SELECTION ================= */
 
 function selectMin() {
     j = i;
@@ -159,8 +179,8 @@ function scanNext() {
         }
     }
 
-    updateStats();
     render();
+    updateStats();
 }
 
 function placeMin() {
@@ -176,7 +196,7 @@ function placeMin() {
     render();
 }
 
-/* ================= INSERTION SORT ================= */
+/* ================= INSERTION ================= */
 
 function pick() {
     j = i + 1;
@@ -192,7 +212,6 @@ function shift() {
         comparisons++;
 
         j--;
-
     }
 
     render();
@@ -200,21 +219,5 @@ function shift() {
 }
 
 function insert() {
-
     i++;
-
-    if (i >= array.length) {
-        i = array.length - 1;
-    }
-
-    render();
-}
-
-/* ================= SWAP ================= */
-
-function swap(a, b) {
-
-    let temp = array[a];
-    array[a] = array[b];
-    array[b] = temp;
 }
