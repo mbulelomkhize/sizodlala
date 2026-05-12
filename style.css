@@ -1,0 +1,88 @@
+:root {
+    --bg-color: #0b0c20;
+    --card-bg: #151a3a;
+    --accent-blue: #00d2ff;
+    --accent-pink: #ff007f;
+    --accent-green: #39ff14;
+    --accent-yellow: #ffdf00;
+}
+
+body {
+    margin: 0;
+    font-family: Arial;
+    background: var(--bg-color);
+    color: white;
+}
+
+.game-container {
+    display: flex;
+    width: 100vw;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 320px;
+    background: var(--card-bg);
+    padding: 20px;
+}
+
+.btn-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+button {
+    padding: 10px;
+    background: #1a224c;
+    color: white;
+    border: none;
+    border-radius: 8px;
+}
+
+button.active {
+    background: var(--accent-blue);
+    color: black;
+}
+
+.visualizer-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#array-container {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    height: 400px;
+    width: 90%;
+}
+
+.bar {
+    width: 40px;
+    min-height: 20px; /* 🔥 FIX: ensures visibility */
+    background: linear-gradient(to top, var(--accent-pink), #ff66b2);
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    color: white;
+    font-weight: bold;
+}
+
+.bar.active { background: var(--accent-yellow); }
+.bar.compare { background: var(--accent-blue); }
+.bar.minimum { background: orange; }
+.bar.sorted { background: var(--accent-green); }
+
+.hidden {
+    display: none;
+}
+
+.game-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
