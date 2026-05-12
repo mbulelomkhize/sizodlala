@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bubble Sort</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body onload="initBubble()">
+
+<h2>Bubble Sort Game</h2>
+
+<div id="array-container"></div>
+
+<div class="controls">
+
+    <button onclick="moveLeft()">⬅</button>
+    <button onclick="compare(true)">Swap</button>
+    <button onclick="compare(false)">No Swap</button>
+    <button onclick="moveRight()">➡</button>
+
+</div>
+
+<p id="stats">Comparisons: 0 | Swaps: 0</p>
+
+<script src="game.js"></script>
+</body>
+</html>
