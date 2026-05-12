@@ -1,16 +1,29 @@
 let array = [];
-
-let algo = "bubble";
-
 let i = 0;
 let j = 0;
-let passLimit = 9;
-
-let selectedMin = 0;
-let insertionKey = 0;
+let pass = 0;
 
 let comparisons = 0;
 let swaps = 0;
+
+let mode = "";
+
+/* ================= INIT ================= */
+
+function initBubble() {
+    mode = "bubble";
+    generateArray();
+}
+
+function initSelection() {
+    mode = "selection";
+    generateArray();
+}
+
+function initInsertion() {
+    mode = "insertion";
+    generateArray();
+}
 
 /* ================= ARRAY ================= */
 
@@ -24,9 +37,13 @@ function generateArray() {
 
     i = 0;
     j = 0;
-    passLimit = array.length - 1;
+    pass = 0;
+
+    comparisons = 0;
+    swaps = 0;
 
     render();
+    updateStats();
 }
 
 /* ================= RENDER ================= */
@@ -41,81 +58,83 @@ function render() {
         const bar = document.createElement("div");
         bar.className = "bar";
 
-        bar.style.height = (array[n] * 3) + "px"; // 🔥 FIXED VISIBILITY
-
+        bar.style.height = (array[n] * 3) + "px";
         bar.textContent = array[n];
+
+        // 🧠 VISUAL EDUCATION STATES
+
+        if (mode === "bubble") {
+
+            if (n === i || n === i + 1)
+                bar.classList.add("compare");
+
+            if (n >= array.length - pass)
+                bar.classList.add("sorted");
+        }
+
+        if (mode === "selection") {
+
+            if (n >= pass)
+                bar.classList.add("sorted");
+
+            if (n === i)
+                bar.classList.add("active");
+
+            if (n === j)
+                bar.classList.add("minimum");
+        }
+
+        if (mode === "insertion") {
+
+            if (n <= i)
+                bar.classList.add("sorted");
+
+            if (n === i)
+                bar.classList.add("active");
+        }
 
         c.appendChild(bar);
     }
-}
-
-/* ================= UI ================= */
-
-function setAlgorithm(a, btn) {
-
-    algo = a;
-
-    document.querySelectorAll("[id^='algo-']")
-        .forEach(b => b.classList.remove("active"));
-
-    btn.classList.add("active");
-
-    resetGame();
-}
-
-/* ================= RESET ================= */
-
-function resetGame() {
-
-    comparisons = 0;
-    swaps = 0;
-
-    i = 0;
-    j = 0;
-    passLimit = 9;
-
-    generateArray();
-
-    updateStats();
 }
 
 /* ================= STATS ================= */
 
 function updateStats() {
 
-    document.getElementById("comparisons").innerText = comparisons;
-    document.getElementById("swaps").innerText = swaps;
+    document.getElementById("stats").innerText =
+        "Comparisons: " + comparisons +
+        " | Swaps: " + swaps;
+
 }
 
-/* ================= BUBBLE SORT (FIXED PASSES) ================= */
+/* ================= BUBBLE SORT ================= */
 
 function moveLeft() {
     if (i > 0) i--;
 }
 
 function moveRight() {
-    if (i < passLimit) i++;
+    if (i < array.length - 2 - pass) i++;
 }
 
 function compare(choice) {
 
-    let a = array[i];
-    let b = array[i + 1];
-
-    let shouldSwap = a > b;
+    let shouldSwap = array[i] > array[i + 1];
 
     comparisons++;
 
     if (choice === shouldSwap && shouldSwap) {
+
         swap(i, i + 1);
         swaps++;
+
     }
 
     i++;
 
-    if (i >= passLimit) {
+    if (i >= array.length - 1 - pass) {
         i = 0;
-        passLimit--;
+        pass++;
     }
 
     render();
@@ -125,30 +144,34 @@ function compare(choice) {
 /* ================= SELECTION SORT ================= */
 
 function selectMin() {
-    selectedMin = j;
+    j = i;
 }
 
 function scanNext() {
 
-    j++;
+    if (j < array.length - 1) {
+        j++;
 
-    comparisons++;
+        comparisons++;
 
-    if (array[j] < array[selectedMin]) {
-        selectedMin = j;
+        if (array[j] < array[i]) {
+            i = j;
+        }
     }
 
     updateStats();
+    render();
 }
 
 function placeMin() {
 
-    swap(i, selectedMin);
+    swap(pass, i);
+
     swaps++;
 
-    i++;
-    j = i;
-    selectedMin = i;
+    pass++;
+    i = pass;
+    j = pass;
 
     render();
 }
@@ -156,38 +179,42 @@ function placeMin() {
 /* ================= INSERTION SORT ================= */
 
 function pick() {
-    insertionKey = i + 1;
+    j = i + 1;
 }
 
 function shift() {
 
-    if (array[insertionKey] < array[insertionKey - 1]) {
+    if (j > 0 && array[j] < array[j - 1]) {
 
-        swap(insertionKey, insertionKey - 1);
-
-        insertionKey--;
+        swap(j, j - 1);
 
         swaps++;
         comparisons++;
+
+        j--;
+
+    }
+
+    render();
+    updateStats();
+}
+
+function insert() {
+
+    i++;
+
+    if (i >= array.length) {
+        i = array.length - 1;
     }
 
     render();
 }
 
-function insert() {
-    i++;
-}
-
 /* ================= SWAP ================= */
 
-function swap(x, y) {
+function swap(a, b) {
 
-    let temp = array[x];
-    array[x] = array[y];
-    array[y] = temp;
+    let temp = array[a];
+    array[a] = array[b];
+    array[b] = temp;
 }
-
-/* ================= INIT ================= */
-
-generateArray();
-render();
