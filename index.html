@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algorithm Sorting Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="game-container">
+
+    <div class="sidebar">
+
+        <h1 class="game-title">
+            ALGORITHM<br>
+            <span>SORTING</span>
+        </h1>
+
+        <div class="control-group">
+
+            <h3>CHOOSE ALGORITHM</h3>
+
+            <div class="btn-grid">
+
+                <button id="algo-bubble" class="active"
+                        onclick="setAlgorithm('bubble', this)">
+                    Bubble Sort
+                </button>
+
+                <button id="algo-selection"
+                        onclick="setAlgorithm('selection', this)">
+                    Selection Sort
+                </button>
+
+                <button id="algo-insertion"
+                        onclick="setAlgorithm('insertion', this)">
+                    Insertion Sort
+                </button>
+
+            </div>
+
+        </div>
+
+        <div class="control-group">
+
+            <h3>GAME MODE</h3>
+
+            <div class="btn-grid">
+
+                <button id="mode-practice" class="active"
+                        onclick="setMode('practice', this)">
+                    Practice
+                </button>
+
+                <button id="mode-countdown"
+                        onclick="setMode('countdown', this)">
+                    Countdown
+                </button>
+
+            </div>
+
+        </div>
+
+        <div class="control-group">
+
+            <h3>TYPE OF LIST</h3>
+
+            <div class="btn-grid">
+
+                <button id="type-num" class="active"
+                        onclick="setListType('numerical', this)">
+                    Numerical
+                </button>
+
+                <button id="type-alpha"
+                        onclick="setListType('alphabetical', this)">
+                    Alphabetical
+                </button>
+
+            </div>
+
+        </div>
+
+        <div class="stats-panel">
+
+            <p>⚡ Comparisons: <span id="comparisons">0</span></p>
+            <p>🔄 Swaps: <span id="swaps">0</span></p>
+            <p>⏱️ Time: <span id="timer">00:00</span></p>
+
+        </div>
+
+        <button id="start-btn" onclick="startSorting()">START ▶</button>
+        <button id="reset-btn" onclick="resetGame()">RESET 🔄</button>
+
+    </div>
+
+    <div class="visualizer-container">
+
+        <div class="robot-helper" id="robot-text">
+            🤖 Ready
+        </div>
+
+        <div id="array-container"></div>
+
+        <div class="interactive-controls">
+
+            <div id="bubble-controls" class="game-buttons">
+                <button onclick="moveLeft()">⬅</button>
+                <button onclick="compare(true)">Swap</button>
+                <button onclick="compare(false)">No Swap</button>
+                <button onclick="moveRight()">➡</button>
+            </div>
+
+            <div id="selection-controls" class="game-buttons hidden">
+                <button onclick="selectMin()">Select Min</button>
+                <button onclick="scanNext()">Next</button>
+                <button onclick="placeMin()">Place</button>
+            </div>
+
+            <div id="insertion-controls" class="game-buttons hidden">
+                <button onclick="pick()">Pick</button>
+                <button onclick="shift()">Shift</button>
+                <button onclick="insert()">Insert</button>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="game.js"></script>
+
+</body>
+</html>
