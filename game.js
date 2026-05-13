@@ -58,31 +58,3 @@ function render() {
         bar.style.height = (array[n] * 3) + "px";
         bar.textContent = array[n];
 
-        // BUBBLE SORT
-        if (mode === "bubble") {
-            if (n === i || n === i + 1)
-                bar.classList.add("compare");
-
-            if (n >= array.length - pass)
-                bar.classList.add("sorted");
-        }
-
-        // SELECTION SORT
-        if (mode === "selection") {
-            if (n === j)
-                bar.classList.add("minimum");
-
-            if (n === i)
-                bar.classList.add("active");
-
-            if (n < pass)
-                bar.classList.add("sorted");
-        }
-
-        // INSERTION SORT
-        if (mode === "insertion") {
-            if (n === i)
-                bar.classList.add("active");
-
-            if (n < i)
-                bar.classList.add("sorted");
